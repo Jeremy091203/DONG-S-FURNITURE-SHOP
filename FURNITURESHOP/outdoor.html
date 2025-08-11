@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sofas | FURNITURE SHOP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow-y: auto;
+      font-family: 'Lato', sans-serif;
+    }
+    .modal.active {
+      display: flex;
+    }
+    .modal-content {
+      background: white;
+      padding: 20px 25px;
+      border-radius: 8px;
+      max-width: 400px;
+      width: 100%;
+      position: relative;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    }
+    .modal-close {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+    /* Product Grid */
+    .productGrid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      padding: 20px;
+    }
+    .productCard {
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      width: 280px;
+      text-align: center;
+      padding: 15px;
+      background: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .productImg {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+    .productName {
+      font-weight: 700;
+      margin: 12px 0 6px;
+      font-size: 1.1rem;
+      color: #222;
+    }
+    .productPrice {
+      font-weight: 900;
+      color: #c0392b;
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+    .productButton {
+      background-color: #2980b9;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 4px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      font-size: 1rem;
+    }
+    .productButton:hover {
+      background-color: #1c5980;
+    }
+    /* Form inside modal */
+    form label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+    form input {
+      width: 100%;
+      padding: 8px 10px;
+      margin-top: 4px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    .cardIcons {
+      margin: 10px 0;
+      display: flex;
+      gap: 10px;
+    }
+    .cardIcon {
+      width: 40px;
+      height: auto;
+    }
+    .cardInfo {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .cardInfo input {
+      flex: 1;
+    }
+    .payButton {
+      width: 100%;
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      padding: 12px 0;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .payButton:hover {
+      background-color: #1e8449;
+    }
+    /* Banner */
+    .categoryBanner {
+      text-align: center;
+      padding: 40px 20px 20px;
+      font-family: 'Lato', sans-serif;
+      background: #f9f8f8;
+    }
+    .bannerTitle {
+      font-weight: 900;
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #222;
+    }
+    .bannerDesc {
+      font-weight: 400;
+      font-size: 1.1rem;
+      color: #020202;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav id="nav">
+    <div class="navTop" style="display:flex; justify-content: space-between; align-items: center; padding: 10px 20px;">
+      <div class="navItem">
+        <img src="img/屏幕截图 2025-08-10 161830.png" alt="logo" class="logo" style="height: 60px;" />
+      </div>
+      <div class="navItem">
+        <div class="search" style="display:flex; align-items:center; gap:5px;">
+          <input type="text" placeholder="Search..." class="searchInput" style="padding:5px 10px; border-radius: 4px; border: 1px solid #ccc;" />
+          <img src="./img/Contact/search.png" width="20" height="20" alt="search icon" />
+        </div>
+      </div>
+      <div class="navItem">
+        <span class="limitedOffer" onclick="location.href='admin.php';" style="cursor: pointer; font-weight: 700; color:#2980b9;">Admin</span>
+      </div>
+    </div>
+    <div class="navBottom" style="display:flex; justify-content:center; gap: 30px; padding: 10px 0; background: #eee;">
+      <h3 class="menuItem"><a href="sofas.html">SOFAS</a></h3>
+      <h3 class="menuItem"><a href="living-room.html">LIVING ROOM</a></h3>
+      <h3 class="menuItem"><a href="dining.html">DINING</a></h3>
+      <h3 class="menuItem"><a href="bedroom.html">BEDROOM</a></h3>
+      <h3 class="menuItem"><a href="outdoor.html">OUTDOOR</a></h3>
+    </div>
+  </nav>
+
+  <!-- Category Banner -->
+  <section class="categoryBanner">
+    <h1 class="bannerTitle">Premium outdoor Collection</h1>
+    <p class="bannerDesc">Discover our range of modern, comfortable, and stylish backyard for every home.</p>
+  </section>
+
+  <!-- Products Grid -->
+  <section class="productGrid">
+    <div class="productCard" data-name="Outdoor Lounge Set" data-price="RM1599">
+      <img src="img/Product/s-l1200.jpg" alt="Lounge Set" class="productImg" />
+      <h2 class="productName">Outdoor Lounge Set</h2>
+      <p class="productPrice">RM1599</p>
+      <button class="productButton">BUY NOW</button>
+    </div>
+
+    <div class="productCard" data-name="Nordic Eternity Wicker Chair" data-price="RM5180">
+      <img src="img/Product/outdoor.png" alt="Nordic Eternity Wicker Chair" class="productImg" />
+      <h2 class="productName">Nordic Eternity Wicker Chair</h2>
+      <p class="productPrice">RM5180</p>
+      <button class="productButton">BUY NOW</button>
+    </div>
+
+    <div class="productCard" data-name="Comfortable Outdoor Leisure Cushion, Woven Rattan Rocking Chair Pad for Single Sofa" data-price="RM999">
+      <img src="img/Product/9866c9f8954644bc9c6537b3d145f850-goods.webp" alt="Outdoor Sofa" class="productImg" />
+      <h2 class="productName">Comfortable Outdoor Leisure Cushion, Woven Rattan Rocking Chair Pad for Single Sofa</h2>
+      <p class="productPrice">RM999</p>
+      <button class="productButton">BUY NOW</button>
+    </div>
+  </section>
+
+  <!-- Payment Modal -->
+  <div class="modal" id="paymentModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close payment form">&times;</button>
+      <h1 id="modalTitle" style="margin-bottom: 10px;">Purchase: <span id="modalProductName"></span></h1>
+      <p id="modalDesc" style="margin-bottom: 20px; font-weight: 600;">Price: <span id="modalProductPrice"></span></p>
+      <form action="data.php" method="POST" id="paymentForm">
+        <!-- Hidden input to store product name and price -->
+        <input type="hidden" name="product_name" id="inputProductName" />
+        <input type="hidden" name="product_price" id="inputProductPrice" />
+
+        <label for="name">Name and Surname</label>
+        <input type="text" name="name" id="name" placeholder="Tan Zheng Jie" class="payInput" required />
+
+        <label for="phone_number">Phone Number</label>
+        <input type="tel" name="phone_number" id="phone_number" placeholder="+6019-381 8932" maxlength="13" class="payInput" required />
+
+        <label for="address">Address</label>
+        <input type="text" name="address" id="address" placeholder="Elton St 21 22-145" class="payInput" required />
+
+        <h2 style="margin-top: 20px;">Card Information</h2>
+        <div class="cardIcons">
+          <img src="./img/Contact/visa.png" width="40" alt="Visa card icon" class="cardIcon" />
+          <img src="./img/Contact/master.png" width="40" alt="MasterCard icon" class="cardIcon" />
+        </div>
+
+        <label for="card_number">Card Number</label>
+        <input type="text" name="card_number" id="card_number" class="payInput" placeholder="Card Number" maxlength="16" required />
+
+        <div class="cardInfo">
+          <input type="text" name="expiry_month" id="expiry_month" placeholder="MM" class="payInput" maxlength="2" required />
+          <input type="text" name="expiry_year" id="expiry_year" placeholder="YYYY" class="payInput" maxlength="4" required />
+          <input type="text" name="cvv" id="cvv" placeholder="CVV" class="payInput" maxlength="4" required />
+        </div>
+
+        <button type="submit" class="payButton">Checkout!</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer style="display:flex; justify-content: space-between; background:#eee; padding: 30px 40px; font-family: 'Lato', sans-serif; flex-wrap: wrap;">
+    <div class="footerLeft" style="flex:1; min-width: 200px; margin-bottom: 20px;">
+      <div class="footerMenu">
+        <h1 class="fMenuTitle" style="font-weight: 700; margin-bottom: 10px;">About Us</h1>
+        <ul class="fList" style="list-style: none; padding: 0;">
+        <li class="fListItem"><a href="company.html">Company</a></li>
+        <li class="fListItem"><a href="contact.html">Contact</a></li>
+        <li class="fListItem"><a href="careers.html">Careers</a></li>
+        <li class="fListItem"><a href="affiliates.html">Affiliates</a></li>
+        <li class="fListItem"><a href="stores.html">Stores</a></li>
+        </ul>
+      </div>
+      <div class="footerMenu" style="margin-top: 20px;">
+        <h1 class="fMenuTitle" style="font-weight: 700; margin-bottom: 10px;">Products</h1>
+        <ul class="fList" style="list-style: none; padding: 0;">
+          <li class="fListItem"><a href="sofas.html">SOFAS</a></li>
+          <li class="fListItem"><a href="living-room.html">LIVING ROOM</a></li>
+          <li class="fListItem"><a href="dining.html">DINING</a></li>
+          <li class="fListItem"><a href="bedroom.html">BEDROOM</a></li>
+          <li class="fListItem"><a href="outdoor.html">OUTDOOR</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footerRight" style="flex:1; min-width: 200px; margin-bottom: 20px;">
+      <div class="footerRightMenu" style="margin-bottom: 30px;">
+        <h1 class="fMenuTitle" style="font-weight: 700; margin-bottom: 10px;">Subscribe to our channel</h1>
+        <div class="fMail" style="display:flex; gap: 10px;">
+          <input type="email" placeholder="your@email.com" class="fInput" style="flex:1; padding: 8px; border-radius: 4px; border: 1px solid #ccc;" />
+          <button class="fButton" style="padding: 8px 20px; background:#2980b9; color:white; border:none; border-radius: 4px; cursor:pointer;">Join!</button>
+        </div>
+      </div>
+
+      <div class="footerRightMenu" style="margin-bottom: 20px;">
+        <h1 class="fMenuTitle" style="font-weight: 700; margin-bottom: 10px;">Follow Us</h1>
+        <div class="fIcons" style="display:flex; gap: 15px;">
+          <a href="https://www.facebook.com" target="_blank"><img src="img/Contact/facebook.png" alt="Facebook" class="fIcon" style="width: 30px;" /></a>
+          <a href="https://twitter.com" target="_blank"><img src="img/Contact/twitter.png" alt="Twitter" class="fIcon" style="width: 30px;" /></a>
+          <a href="https://www.instagram.com" target="_blank"><img src="img/Contact/instagram.png" alt="Instagram" class="fIcon" style="width: 30px;" /></a>
+          <a href="https://wa.me/60125651533" target="_blank"><img src="img/Contact/whatsapp.png" alt="WhatsApp" class="fIcon" style="width: 30px;" /></a>
+        </div>
+      </div>
+
+      <div class="footerRightMenu">
+        <span class="copyright" style="font-size: 0.9rem; color:#666;">Dong . All rights reserved. 2025.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Modal elements
+    const modal = document.getElementById('paymentModal');
+    const modalCloseBtn = modal.querySelector('.modal-close');
+    const modalProductName = document.getElementById('modalProductName');
+    const modalProductPrice = document.getElementById('modalProductPrice');
+    const inputProductName = document.getElementById('inputProductName');
+    const inputProductPrice = document.getElementById('inputProductPrice');
+
+    // Show modal function
+    function showModal(name, price) {
+      modalProductName.textContent = name;
+      modalProductPrice.textContent = price;
+      inputProductName.value = name;
+      inputProductPrice.value = price;
+      modal.classList.add('active');
+    }
+
+    // Hide modal function
+    function hideModal() {
+      modal.classList.remove('active');
+      document.getElementById('paymentForm').reset();
+    }
+
+    // Attach event to all buy buttons
+    document.querySelectorAll('.productButton').forEach(button => {
+      button.addEventListener('click', () => {
+        const card = button.closest('.productCard');
+        const name = card.getAttribute('data-name');
+        const price = card.getAttribute('data-price');
+        showModal(name, price);
+      });
+    });
+
+    // Close modal on clicking close button
+    modalCloseBtn.addEventListener('click', hideModal);
+
+    // Close modal if clicking outside the modal content
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        hideModal();
+      }
+    });
+
+    // Optional: close modal on Escape key press
+    window.addEventListener('keydown', (e) => {
+      if (e.key === "Escape" && modal.classList.contains('active')) {
+        hideModal();
+      }
+    });
+  </script>
+</body>
+</html>
